@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Finanzen</title>
+
+  <link
+    rel="apple-touch-icon"
+    href="Codex%20Image%20Aug%2018%2C%202026%2C%2011_36_21%20PM.png">
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes">
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="default">
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="Finanzen">
+
+  <script>
+    window.location.replace(
+      "https://script.google.com/macros/s/AKfycbzeuUJ0B254JCAft9tAhdcGBsrHIW-XPMdy6vC3az9_LiL5KfJVtf6IP66FWgXKkmx3/exec"
+    );
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f2f2f7;
+    }
+
+    p {
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <p>Finanzen wird geöffnet …</p>
+</body>
+</html>
