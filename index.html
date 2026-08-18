@@ -25,30 +25,242 @@
     name="apple-mobile-web-app-title"
     content="Finanzen">
 
-<script>
-    window.location.replace(
-      "https://script.google.com/macros/s/AKfycbzeuUJ0B254JCAft9tAhdcGBsrHIW-XPMdy6vC3az9_LiL5KfJVtf6IP66FWgXKkmx3/exec"
-    );
-  </script>
-
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
+      min-height: 100dvh;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+      padding:
+        env(safe-area-inset-top)
+        24px
+        env(safe-area-inset-bottom);
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        sans-serif;
+
       background: #f2f2f7;
+      color: #000;
     }
 
-    p {
-      color: #666;
+    .login {
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+      background: #ffffff;
+
+      font-size: 34px;
+
+      box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 0 0 28px;
+      color: #6e6e73;
+      font-size: 16px;
+    }
+
+    input {
+      width: 100%;
+      height: 52px;
+
+      padding: 0 16px;
+
+      border: 1px solid #d1d1d6;
+      border-radius: 12px;
+
+      background: #ffffff;
+
+      font-family: inherit;
+      font-size: 17px;
+
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #007aff;
+      box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+    }
+
+    button {
+      width: 100%;
+      height: 52px;
+
+      margin-top: 14px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: #007aff;
+      color: #ffffff;
+
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+    button:active {
+      opacity: 0.75;
+    }
+
+    .error {
+      min-height: 22px;
+      margin-top: 14px;
+
+      color: #ff3b30;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
-  <p>Finanzen wird geöffnet …</p>
+
+  <main class="login">
+
+    <div class="icon">🔒</div>
+
+    <h1>Finanzen</h1>
+
+    <p class="subtitle">
+      Passwort eingeben, um fortzufahren.
+    </p>
+
+    <form id="loginForm">
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Passwort"
+        autocomplete="current-password"
+        autofocus>
+
+      <button type="submit">
+        Entsperren
+      </button>
+
+      <div
+        id="error"
+        class="error">
+      </div>
+
+    </form>
+
+  </main>
+
+  <script>
+
+    const correctHash =
+      "6cd8ab96688afaef1680a0eb6a6e5d584129ad98437ce83b8f35af6a95fad58d";
+
+    const targetUrl =
+      "https://script.google.com/macros/s/AKfycbzeuUJ0B254JCAft9tAhdcGBsrHIW-XPMdy6vC3az9_LiL5KfJVtf6IP66FWgXKkmx3/exec";
+
+
+    async function sha256(text) {
+
+      const data =
+        new TextEncoder().encode(text);
+
+      const hashBuffer =
+        await crypto.subtle.digest(
+          "SHA-256",
+          data
+        );
+
+      const hashArray =
+        Array.from(
+          new Uint8Array(hashBuffer)
+        );
+
+      return hashArray
+        .map(
+          byte =>
+            byte
+              .toString(16)
+              .padStart(2, "0")
+        )
+        .join("");
+    }
+
+
+    document
+      .getElementById("loginForm")
+      .addEventListener(
+        "submit",
+        async function(event) {
+
+          event.preventDefault();
+
+          const password =
+            document
+              .getElementById("password")
+              .value;
+
+          const enteredHash =
+            await sha256(password);
+
+          if (enteredHash === correctHash) {
+
+            document
+              .getElementById("error")
+              .textContent = "";
+
+            window.location.replace(
+              targetUrl
+            );
+
+          } else {
+
+            document
+              .getElementById("error")
+              .textContent =
+                "Falsches Passwort";
+
+            document
+              .getElementById("password")
+              .value = "";
+
+            document
+              .getElementById("password")
+              .focus();
+          }
+        }
+      );
+
+  </script>
+
 </body>
 </html>
